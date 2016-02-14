@@ -46,8 +46,22 @@ sudo npm install -g phonegap
 4. cordova
 
 sudo npm install -g cordova
+brew install ant
+brew install imagemagick
 
 5. xcode (create an iTunes account with your e-mail) 
 
+```
+
+### Database software
+``` bash
+1. sql workbench
+2. skipper
+```
+
+### Misc
+``` bash
+brew install imagemagick
+brew install ffmpeg
 ```
 
