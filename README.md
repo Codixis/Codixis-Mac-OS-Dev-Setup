@@ -42,7 +42,12 @@ brew install node
 sudo npm install -g phonegap
 
 2. gapdebug
-3. xcode
-4. android sdk
+3. android sdk
+4. cordova
+
+sudo npm install -g cordova
+
+5. xcode (create an iTunes account with your e-mail) 
+
 ```
 
