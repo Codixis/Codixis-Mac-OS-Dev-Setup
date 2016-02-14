@@ -63,5 +63,6 @@ brew install imagemagick
 ``` bash
 brew install imagemagick
 brew install ffmpeg
+npm install -g bower
 ```
 
