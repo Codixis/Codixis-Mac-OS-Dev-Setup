@@ -1,8 +1,8 @@
 # ![codixis](media/codixis.png)
 
-Codixis standard Symfony LEMP setup 
+Codixis Mac OS Dev Setup 
 ========
-Only for the `Digital Ocean` Lemp stack
+Use at your own risk :) 
 
 ## Ubuntu 14.*
 ### Install dependencies
