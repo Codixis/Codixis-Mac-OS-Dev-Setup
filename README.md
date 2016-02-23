@@ -55,8 +55,9 @@ brew install imagemagick
 
 ### Database software
 ``` bash
-1. sql workbench
-2. skipper
+1. Sequel Pro
+2. sql workbench
+3. skipper
 ```
 
 ### Misc
