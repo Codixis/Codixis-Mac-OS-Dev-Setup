@@ -151,7 +151,7 @@ nginx.logs.default.access
 nginx.logs.default-ssl.access
 nginx.logs.phpmyadmin.access
 
-
+Full tutorial here : https://gist.github.com/mgmilcher/5eaed7714d031a12ed97
 
 ```
 
