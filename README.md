@@ -69,6 +69,17 @@ brew install ffmpeg
 npm install -g bower
 ```
 
+### Setting up PHP for Symfony built in server
+``` bash
+cp /etc/php.ini.default /etc/php.ini
+## Add : date.timezone = Europe/Paris
+
+ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
+brew install autoconf icu4c
+pecl install intl
+```
+
+
 ### Installing nginx with PHP-FPM
 ``` bash
 ## Install PHP 
