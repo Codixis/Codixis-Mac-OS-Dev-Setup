@@ -77,6 +77,7 @@ cp /etc/php.ini.default /etc/php.ini
 ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
 brew install autoconf icu4c
 pecl install intl
+## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
 ```
 
 
