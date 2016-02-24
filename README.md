@@ -78,6 +78,8 @@ ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Devel
 brew install autoconf icu4c
 pecl install intl
 ## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
+
+## Then add the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
 ```
 
 
