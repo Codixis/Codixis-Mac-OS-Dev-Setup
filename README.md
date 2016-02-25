@@ -79,7 +79,9 @@ npm install -g bower
 brew cask install vagrant
 brew cask install vagrant-manager
 vagrant plugin install vagrant-parallels
+brew install ansible
 brew install docker boot2docker
+brew cask install docker-compose
 boot2docker init
 boot2docker up
 
@@ -89,7 +91,6 @@ gem uninstall libv8
 brew install v8
 gem install therubyracer
 gem install libv8 -v 3.16.14.3 -- --with-system-v8
-
 
 # Misc
 brew cask install alfred
@@ -128,6 +129,81 @@ git config --global color.ui true
 1. Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
 2. Add the dark template in the settings 
 ```
+
+## Using Docker for Symfony 
+
+### Prepare your project 
+``` bash
+# In your phpstorm environment, clone docker symfony : 
+git clone git@github.com:eko/docker-symfony.git
+
+# Next, put your Symfony application into symfony folder and do not forget to add symfony.dev in your /etc/hosts file.
+```
+
+### Run Docker 
+``` bash
+docker-compose up
+
+# You are done, you can visite your Symfony application on the following URL: http://symfony.dev (and access Kibana on http://symfony.dev:81)
+
+# To rebuild Docker images :
+docker-compose build
+```
+
+## Using Vagrant for Symfony 
+#### Requirements 
+Vagrant
+Ansible
+Virtualbox
+
+### Prepare your project 
+``` bash
+# In your phpstorm environment, clone : 
+git clone git@github.com:albertcolom/custom-ansible-vagrant.git
+
+# Add domain in hosts
+echo "10.10.10.10 web.dev >> /etc/hosts"
+```
+
+### Run Vagrant 
+``` bash
+# run vagrant (for the first time it should take up to 20-30 min)
+vagrant up
+
+# Links :
+Web Server: http://web.dev or http://10.10.10.10
+Adminer: http://web.dev/adminer or http://10.10.10.10/adminer
+Elasticsearch: http://web.dev:9200 or http://10.10.10.10:9200
+ElasticHQ: http://web.dev:9200/_plugin/HQ/ or http://10.10.10.10:9200/_plugin/HQ/
+```
+
+#### Installed components :
+Apache 2   
+PHP 5.6   
+MySQL   
+Elasticsearch   
+ElasticHQ   
+Nodejs   
+APC   
+Memcached   
+Symfony installer   
+Composer (Globally)   
+Adminer   
+Vim   
+Git   
+Htop   
+Python-pip   
+Curl   
+Sendmail   
+Unzip   
+Tmux   
+Zsh (Default shell)   
+Figlet   
+Openjdk-7-jdk   
+Httpie   
+Npm  
+Imagemagick   
+
 
 ## Local Lemp environment setup (if not using Vagrant or Docker) 
 
