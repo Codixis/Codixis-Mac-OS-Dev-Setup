@@ -5,12 +5,24 @@ Codixis Mac OS Dev Setup
 Use at your own risk :) 
 
 ## First steps ..
-### Install editors & MAMP
+
+### Mac environment setup 
 ``` bash
-1. Download Sublime Text 
-2. Download PHP Storm 9
-3. Install MAMP PRO 2.2
->> Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
+#Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+
+#Set a shorter Delay until key repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
+
+#Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+#Show the ~/Library folder
+chflags nohidden ~/Library
+
+#Store screenshots in subfolder on desktop
+mkdir ~/Desktop/Screenshots
+defaults write com.apple.screencapture location ~/Desktop/Screenshots
 ```
 
 ### Install Brew and composer 
@@ -21,67 +33,85 @@ sudo mv composer.phar /usr/local/bin/composer
 brew update && brew upgrade
 ```
 
-### Install browser and virtualbox 
+### Install Xcode 
 ``` bash
-1. virtual box 
-2. firefox
-3. opera
-4. chrome 
+## From the app store and CLI with :
+xcode-select --install
 ```
 
-### Install Axure 6 
+### Software install with brew cast
 ``` bash
-Old version of Axure from their website 
-```
+# homebrew-cask
+brew tap phinze/homebrew-cask
+brew install brew-cask
 
-### Install mobile dev environment 
-``` bash
-1. phonegap
+# basic tools
+brew install automake colordiff curl git  
+brew install hub libmemcached memcached openssl 
 
-brew update
+# browser
+brew cask install firefox-aurora
+brew cask install google-chrome
+brew cask install google-chrome-canary
+brew cask install opera-next
+
+# development
+brew cask install sublime-text-3
+brew cask install filezilla
+brew cask install virtualbox
+brew cask install phpstorm
+brew cask install axure-rp-pro
+brew cask install sequel-pro
+brew cask install mysqlworkbench
+
+# nodejs and phonegap and cordova
 brew install node
 sudo npm install -g phonegap
-
-2. gapdebug
-3. android sdk
-4. cordova
-
 sudo npm install -g cordova
 brew install ant
-brew install imagemagick
 
-5. xcode (create an iTunes account with your e-mail) 
-xcode-select --install
-
-```
-
-### Database software
-``` bash
-1. Sequel Pro
-2. sql workbench
-3. skipper
-```
-
-### Misc
-``` bash
+# dev tools
 brew install imagemagick
 brew install ffmpeg
 npm install -g bower
+
+# other
+brew cask install alfred
+brew cask install skype
+brew cask install spotify
 ```
 
-### Setting up PHP for Symfony built in server
+### Manual software install
 ``` bash
-cp /etc/php.ini.default /etc/php.ini
-## Add : date.timezone = Europe/Paris
-
-ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
-brew install autoconf icu4c
-pecl install intl
-## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
-
-## Then add the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
+1. gapdebug
+2. Skipper
 ```
 
+### Install and setup mysql 
+``` bash
+# Install
+brew install mysql
+brew pin mysql
+
+## Setup
+# Copy launch agent into place
+mkdir -p ~/Library/LaunchAgents && cp /usr/local/Cellar/mysql/VERSION/homebrew.mxcl.mysql.plist ~/Library/LaunchAgents/
+
+# Edit launch agent and set both keepalive and launch at startup to false
+vi ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+# Inject launch agent
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+# Set up databases to run as your user account
+unset TMPDIR && mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+
+# Start mysql
+start mysql
+
+# Secure mysql
+/usr/local/Cellar/mysql/VERSION/bin/mysql_secure_installation
+```
 
 ### Installing nginx with PHP-FPM
 ``` bash
@@ -169,3 +199,41 @@ Full tutorial here : https://gist.github.com/mgmilcher/5eaed7714d031a12ed97
 
 ```
 
+### Setting up PHP for Symfony built in server
+``` bash
+cp /etc/php.ini.default /etc/php.ini
+## Add : date.timezone = Europe/Paris
+
+ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
+brew install autoconf icu4c
+pecl install intl
+## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
+
+## Then add the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
+```
+
+### Setup Github
+``` bash
+ssh-keygen -t rsa -C "user@codixis.com"
+
+# Copy ssh key to github.com
+subl ~/.ssh/id_rsa.pub
+
+# Test connection
+ssh -T git@github.com
+
+# Set git config values
+git config --global user.name "My User"
+git config --global user.email "user@codixis.com"
+git config --global github.user myuser
+git config --global github.token your_token_here
+
+git config --global core.editor "subl -w"
+git config --global color.ui true
+```
+
+### Configure PHP Storm
+``` bash
+1. Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
+2. Add the dark template in the settings 
+```
