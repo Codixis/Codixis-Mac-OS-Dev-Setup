@@ -1,10 +1,10 @@
 # ![codixis](media/codixis.png)
 
-Codixis Mac OS Dev Setup 
+Codixis Mac OS Dev Setup - El Captain
 ========
 Use at your own risk :) 
 
-## First steps ..
+## Basic installation
 
 ### Mac environment setup 
 ``` bash
@@ -75,7 +75,23 @@ brew install imagemagick
 brew install ffmpeg
 npm install -g bower
 
-# other
+# Vagrant & docker
+brew cask install vagrant
+brew cask install vagrant-manager
+vagrant plugin install vagrant-parallels
+brew install docker boot2docker
+boot2docker init
+boot2docker up
+
+# Ruby
+brew uninstall v8
+gem uninstall libv8
+brew install v8
+gem install therubyracer
+gem install libv8 -v 3.16.14.3 -- --with-system-v8
+
+
+# Misc
 brew cask install alfred
 brew cask install skype
 brew cask install spotify
@@ -86,6 +102,34 @@ brew cask install spotify
 1. gapdebug
 2. Skipper
 ```
+
+### Setup Github
+``` bash
+ssh-keygen -t rsa -C "user@codixis.com"
+
+# Copy ssh key to github.com
+subl ~/.ssh/id_rsa.pub
+
+# Test connection
+ssh -T git@github.com
+
+# Set git config values
+git config --global user.name "My User"
+git config --global user.email "user@codixis.com"
+git config --global github.user myuser
+git config --global github.token your_token_here
+
+git config --global core.editor "subl -w"
+git config --global color.ui true
+```
+
+### Configure Phpstorm
+``` bash
+1. Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
+2. Add the dark template in the settings 
+```
+
+## Local Lemp environment setup (if not using Vagrant or Docker) 
 
 ### Install and setup mysql 
 ``` bash
@@ -212,28 +256,5 @@ pecl install intl
 ## Then add the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
 ```
 
-### Setup Github
-``` bash
-ssh-keygen -t rsa -C "user@codixis.com"
 
-# Copy ssh key to github.com
-subl ~/.ssh/id_rsa.pub
 
-# Test connection
-ssh -T git@github.com
-
-# Set git config values
-git config --global user.name "My User"
-git config --global user.email "user@codixis.com"
-git config --global github.user myuser
-git config --global github.token your_token_here
-
-git config --global core.editor "subl -w"
-git config --global color.ui true
-```
-
-### Configure PHP Storm
-``` bash
-1. Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
-2. Add the dark template in the settings 
-```
