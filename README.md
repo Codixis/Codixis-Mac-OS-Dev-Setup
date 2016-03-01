@@ -329,7 +329,21 @@ brew install autoconf icu4c
 pecl install intl
 ## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
 
-## Then add the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
+## Then replace the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
+
+pecl install xdebug
+# add to /etc/php.ini :
+zend_extension=/usr/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so  # with your path to xdebug.so
+# add to /etc/php.ini :
+[xdebug]
+xdebug.remote_enable=1
+xdebug.remote_host=localhost
+xdebug.remote_port=9000
+xdebug.remote_handler="dbgp"
+xdebug.max_nesting_level = 256
+# restart Apache
+apachectl restart
+
 ```
 
 
