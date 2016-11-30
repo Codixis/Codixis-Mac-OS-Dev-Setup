@@ -41,38 +41,37 @@ xcode-select --install
 
 ### Software install with brew cast
 ``` bash
-# homebrew-cask
-brew tap phinze/homebrew-cask
-brew install brew-cask
+# homebrew-cask => No needed anymore
+# brew tap phinze/homebrew-cask
+# brew install brew-cask
 
 # basic tools
 brew install automake colordiff curl git  
 brew install hub libmemcached memcached openssl 
 
 # browser
-brew cask install firefox-aurora
-brew cask install google-chrome
-brew cask install google-chrome-canary
-brew cask install opera-next
+brew cask install firefox
+brew cask install google
+brew cask install opera
 
 # development
-brew cask install sublime-text-3
+brew cask install sublime-text
 brew cask install filezilla
 brew cask install virtualbox
 brew cask install phpstorm
-brew cask install axure-rp-pro
+brew cask install axure-rp
 brew cask install sequel-pro
 brew cask install mysqlworkbench
 
-# nodejs and phonegap and cordova
+# nodejs and phonegap and cordova and native react
 brew install node
 sudo npm install -g phonegap
 sudo npm install -g cordova
-brew install ant
+brew install ant watchman
+sudo npm install -g react-native-cli
 
 # dev tools
-brew install imagemagick
-brew install ffmpeg
+brew install imagemagick ffmpeg
 npm install -g bower
 
 # Vagrant & docker
@@ -86,11 +85,11 @@ boot2docker init
 boot2docker up
 
 # Ruby
-brew uninstall v8
-gem uninstall libv8
+# brew uninstall v8
+# gem uninstall libv8
 brew install v8
-gem install therubyracer
-gem install libv8 -v 3.16.14.3 -- --with-system-v8
+sudo gem install therubyracer
+sudo gem install libv8 -v 3.16.14.3 -- --with-system-v8
 
 # Misc
 brew cask install alfred
