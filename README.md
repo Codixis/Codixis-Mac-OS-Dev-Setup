@@ -70,6 +70,13 @@ sudo npm install -g cordova
 brew install ant watchman
 sudo npm install -g react-native-cli
 
+brew install maven
+brew install gradle
+brew install android-sdk
+brew install android-ndk
+android update sdk --no-ui
+brew cask install android-studio
+
 # dev tools
 brew install imagemagick ffmpeg
 npm install -g bower
