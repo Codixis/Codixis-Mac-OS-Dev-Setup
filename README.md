@@ -48,6 +48,7 @@ xcode-select --install
 # basic tools
 brew install automake colordiff curl git  
 brew install hub libmemcached memcached openssl 
+brew cask install iterm2
 
 # browser
 brew cask install firefox
