@@ -15,7 +15,6 @@ brew update && brew upgrade
 brew install automake colordiff curl git  
 brew install hub libmemcached memcached openssl
 brew cask install iterm2
-brew cask install gitx
 brew cask install firefox
 brew cask install google
 brew cask install opera
