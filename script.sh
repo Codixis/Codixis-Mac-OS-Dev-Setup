@@ -76,6 +76,7 @@ start mysql
 
 mkdir -p ~/Library/LaunchAgents
 cp /usr/local/Cellar/php*/*/homebrew.mxcl.php*.plist ~/Library/LaunchAgents/
+cp ~/Library/LaunchAgents/homebrew.mxcl.php*.plist ~/Library/LaunchAgents/homebrew-php.josegonzalez.php55.plist
 launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php*.plist
 lsof -Pni4 | grep LISTEN | grep php
 
