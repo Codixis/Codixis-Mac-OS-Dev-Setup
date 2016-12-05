@@ -1,116 +1,28 @@
 # ![codixis](media/codixis.png)
 
-Codixis Mac OS Dev Setup - El Captain
+Codixis Mac OS Dev Setup - Sierra
 ========
 Use at your own risk :) 
 
-## Basic installation
+## Use the lazy script ...
 
-### Mac environment setup 
+### Download the script 
 ``` bash
-#Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0.02
+# Install
+wget https://raw.githubusercontent.com/Codixis/Codixis-Mac-OS-Dev-Setup-El-Captain/master/script.sh
+chmod 700 script.sh
+./script.sh
 
-#Set a shorter Delay until key repeat
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
-
-#Add a context menu item for showing the Web Inspector in web views
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-#Show the ~/Library folder
-chflags nohidden ~/Library
-
-#Store screenshots in subfolder on desktop
-mkdir ~/Desktop/Screenshots
-defaults write com.apple.screencapture location ~/Desktop/Screenshots
 ```
 
-### Install Brew and composer 
+### What it will install ? 
 ``` bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-curl -s https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
-brew update && brew upgrade
-```
 
-### Install Xcode 
-``` bash
-## From the app store and CLI with :
-xcode-select --install
-```
+# Basic tools for web development
 
-### Software install with brew cast
-``` bash
-# homebrew-cask => No needed anymore
-# brew tap phinze/homebrew-cask
-# brew install brew-cask
+# Lemp local install 
 
-# basic tools
-brew install automake colordiff curl git  
-brew install hub libmemcached memcached openssl 
-brew cask install iterm2
-brew cask install gitx
-brew cask install tunnelblick
 
-# browser
-brew cask install firefox
-brew cask install google
-brew cask install opera
-
-# development
-brew cask install sublime-text
-brew cask install filezilla
-brew cask install virtualbox
-brew cask install phpstorm
-brew cask install axure-rp
-brew cask install sequel-pro
-brew cask install mysqlworkbench
-
-# nodejs and phonegap and cordova and native react
-brew install node
-sudo npm install -g phonegap
-sudo npm install -g cordova
-brew install ant watchman
-sudo npm install -g react-native-cli
-
-brew install maven
-brew install gradle
-brew install android-sdk
-brew install android-ndk
-android update sdk --no-ui
-brew cask install android-studio
-
-# dev tools
-brew install imagemagick ffmpeg
-npm install -g bower
-
-# Vagrant & docker
-brew cask install vagrant
-brew cask install vagrant-manager
-vagrant plugin install vagrant-parallels
-brew install ansible
-brew install docker boot2docker
-brew cask install docker-compose
-boot2docker init
-boot2docker up
-
-# Ruby
-# brew uninstall v8
-# gem uninstall libv8
-brew install v8
-sudo gem install therubyracer
-sudo gem install libv8 -v 3.16.14.3 -- --with-system-v8
-
-# Misc
-brew cask install alfred
-brew cask install skype
-brew cask install spotify
-```
-
-### Manual software install
-``` bash
-1. gapdebug
-2. Skipper
 ```
 
 ### Setup Github
@@ -133,11 +45,14 @@ git config --global core.editor "subl -w"
 git config --global color.ui true
 ```
 
-### Configure Phpstorm
+### Configure Phpstorm.  
 ``` bash
 1. Setup PHP storm for Symfony : https://confluence.jetbrains.com/display/PhpStorm/Getting+Started+-+Symfony+Development+using+PhpStorm
 2. Add the dark template in the settings 
 ```
+
+### Configure Tunnel blick, Sublime Text
+
 
 ## Using Docker for Symfony 
 
@@ -213,6 +128,131 @@ Httpie
 Npm  
 Imagemagick   
 
+### Setting up PHP for Symfony built in server
+``` bash
+cp /etc/php.ini.default /etc/php.ini
+## Add : date.timezone = Europe/Paris
+
+ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
+brew install autoconf icu4c
+pecl install intl
+## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
+
+## Then replace the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
+
+pecl install xdebug
+# add to /etc/php.ini :
+zend_extension=/usr/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so  # with your path to xdebug.so
+# add to /etc/php.ini :
+[xdebug]
+xdebug.remote_enable=1
+xdebug.remote_host=localhost
+xdebug.remote_port=9000
+xdebug.remote_handler="dbgp"
+xdebug.max_nesting_level = 256
+# restart Apache
+apachectl restart
+
+```
+
+## Explanations
+
+### Mac environment setup 
+``` bash
+#Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0.02
+
+#Set a shorter Delay until key repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
+
+#Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+#Show the ~/Library folder
+chflags nohidden ~/Library
+
+#Store screenshots in subfolder on desktop
+mkdir ~/Desktop/Screenshots
+defaults write com.apple.screencapture location ~/Desktop/Screenshots
+```
+
+### Install Brew and composer 
+``` bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+curl -s https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+brew update && brew upgrade
+```
+
+### Software install with brew cast
+``` bash
+# homebrew-cask => No needed anymore
+# brew tap phinze/homebrew-cask
+# brew install brew-cask
+
+# basic tools
+brew install automake colordiff curl git  
+brew install hub libmemcached memcached openssl 
+brew cask install iterm2
+brew cask install gitx
+brew cask install tunnelblick
+
+# browser
+brew cask install firefox
+brew cask install google
+brew cask install opera
+
+# development
+brew cask install sublime-text
+brew cask install filezilla
+brew cask install virtualbox
+brew cask install phpstorm
+brew cask install axure-rp
+brew cask install sequel-pro
+brew cask install mysqlworkbench
+
+# nodejs and phonegap and cordova and native react
+xcode-select --install
+brew install node
+sudo npm install -g phonegap
+sudo npm install -g cordova
+brew install ant watchman
+sudo npm install -g react-native-cli
+
+brew cask install java 
+brew install maven
+brew install gradle
+brew install android-sdk
+brew install android-ndk
+android update sdk --no-ui
+brew cask install android-studio
+
+# dev tools
+brew install imagemagick ffmpeg
+npm install -g bower
+
+# Vagrant & docker
+brew cask install vagrant
+brew cask install vagrant-manager
+vagrant plugin install vagrant-parallels
+brew install ansible
+brew install docker boot2docker
+brew cask install docker-compose
+boot2docker init
+boot2docker up
+
+# Ruby
+# brew uninstall v8
+# gem uninstall libv8
+brew install v8
+sudo gem install therubyracer
+sudo gem install libv8 -v 3.16.14.3 -- --with-system-v8
+
+# Misc
+brew cask install alfred
+brew cask install skype
+brew cask install spotify
+```
 
 ## Local Lemp environment setup (if not using Vagrant or Docker) 
 
@@ -327,33 +367,3 @@ nginx.logs.phpmyadmin.access
 Full tutorial here : https://gist.github.com/mgmilcher/5eaed7714d031a12ed97
 
 ```
-
-### Setting up PHP for Symfony built in server
-``` bash
-cp /etc/php.ini.default /etc/php.ini
-## Add : date.timezone = Europe/Paris
-
-ln -s /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include /Applications/MAMP/bin/php/php5.5.26
-brew install autoconf icu4c
-pecl install intl
-## When asked for the path to the ICO libraries and headers, answer with : /usr/local/opt/icu4c
-
-## Then replace the real path of "intl.so" to your /etc/php.ini file, for example : /Applications/MAMP/bin/php/php5.5.26/lib/php/extensions/no-debug-non-zts-20121212/intl.so
-
-pecl install xdebug
-# add to /etc/php.ini :
-zend_extension=/usr/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so  # with your path to xdebug.so
-# add to /etc/php.ini :
-[xdebug]
-xdebug.remote_enable=1
-xdebug.remote_host=localhost
-xdebug.remote_port=9000
-xdebug.remote_handler="dbgp"
-xdebug.max_nesting_level = 256
-# restart Apache
-apachectl restart
-
-```
-
-
-
