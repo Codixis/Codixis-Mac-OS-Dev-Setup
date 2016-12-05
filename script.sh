@@ -109,3 +109,7 @@ nginx.stop
 nginx.start
 php-fpm.stop
 php-fpm.start
+
+mkdir -p ~/Documents/Development/nativeReact
+cd ~/Documents/Development
+ln -s /var/www/
