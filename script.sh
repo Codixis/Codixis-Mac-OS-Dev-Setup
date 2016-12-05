@@ -106,3 +106,7 @@ ln -sfv /usr/local/etc/nginx/sites-available/default-ssl /usr/local/etc/nginx/si
 curl -L https://gist.githubusercontent.com/mgmilcher/c3a1d0138dde3eb0f429/raw/ed04e90d7770dbb62c60e1e4a912f75adc46cb5e/osx-server-aliases -o /tmp/.aliases
 cat /tmp/.aliases >> ~/.profile
 source ~/.profile
+nginx.stop
+nginx.start
+php-fpm.stop
+php-fpm.start
