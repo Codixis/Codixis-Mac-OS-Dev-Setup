@@ -27,13 +27,16 @@ brew cask install phpstorm
 brew cask install axure-rp
 brew cask install sequel-pro
 brew cask install mysqlworkbench
+brew cask install tunnelblick
 
+xcode-select --install
 brew install node
 sudo npm install -g phonegap
 sudo npm install -g cordova
 brew install ant watchman
 sudo npm install -g react-native-cli
 
+brew cask install java 
 brew install maven
 brew install gradle
 brew install android-sdk
@@ -65,3 +68,40 @@ brew pin mysql
 brew tap homebrew/dupes
 brew tap josegonzalez/homebrew-php
 brew install --without-apache --with-fpm --with-mysql php55
+
+mkdir -p ~/Library/LaunchAgents && cp /usr/local/Cellar/mysql/*/homebrew.mxcl.mysql.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+unset TMPDIR && mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+start mysql
+
+mkdir -p ~/Library/LaunchAgents
+cp /usr/local/Cellar/php*/*/homebrew.mxcl.php*.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php*.plist
+lsof -Pni4 | grep LISTEN | grep php
+
+brew install nginx
+sudo cp /usr/local/opt/nginx/*.plist /Library/LaunchDaemons/
+sudo chown root:wheel /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+curl -IL http://localhost:8080
+sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+mkdir -p /usr/local/etc/nginx/logs
+mkdir -p /usr/local/etc/nginx/sites-available
+mkdir -p /usr/local/etc/nginx/sites-enabled
+mkdir -p /usr/local/etc/nginx/conf.d
+mkdir -p /usr/local/etc/nginx/ssl
+sudo mkdir -p /var/www
+sudo chown :staff /var/www
+sudo chmod 775 /var/www
+rm /usr/local/etc/nginx/nginx.conf
+curl -L https://gist.github.com/frdmn/7853158/raw/nginx.conf -o /usr/local/etc/nginx/nginx.conf
+rl -L https://gist.github.com/frdmn/7853158/raw/php-fpm -o /usr/local/etc/nginx/conf.d/php-fpm
+curl -L https://gist.github.com/frdmn/7853158/raw/sites-available_default -o /usr/local/etc/nginx/sites-available/default
+curl -L https://gist.github.com/frdmn/7853158/raw/sites-available_default-ssl -o /usr/local/etc/nginx/sites-available/default-ssl
+mkdir -p /usr/local/etc/nginx/ssl
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj '/C=US/ST=State/L=Town/O=Office/CN=localhost' -keyout /usr/local/etc/nginx/ssl/localhost.key -out /usr/local/etc/nginx/ssl/localhost.crt
+ln -sfv /usr/local/etc/nginx/sites-available/default /usr/local/etc/nginx/sites-enabled/default
+ln -sfv /usr/local/etc/nginx/sites-available/default-ssl /usr/local/etc/nginx/sites-enabled/default-ssl
+curl -L https://gist.githubusercontent.com/mgmilcher/c3a1d0138dde3eb0f429/raw/ed04e90d7770dbb62c60e1e4a912f75adc46cb5e/osx-server-aliases -o /tmp/.aliases
+cat /tmp/.aliases >> ~/.profile
+source ~/.profile
