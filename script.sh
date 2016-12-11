@@ -68,6 +68,24 @@ brew tap homebrew/dupes
 brew tap josegonzalez/homebrew-php
 brew install --without-apache --with-fpm --with-mysql php55
 
+brew install icu4c
+echo 'Copy your ICU path, done ? (Y)'
+read input_variable
+cd 
+echo 'You should now be at a prompt to configure PEAR :'
+echo 'Type 1 and press return.'
+echo 'Enter: /usr/local/pear'
+echo 'Type 4 and press return.'
+echo 'Enter: /usr/local/bin'
+echo 'Press return'
+curl -O  http://pear.php.net/go-pear.phar
+php -d detect_unicode=0 go-pear.phar
+sudo pecl update-channels
+sudo pecl install intl
+echo 'Paste your ICU path : your /usr/local/Cellar/icu4c/55.1'
+sed -i '$ a\extension=intl.so' /usr/local/etc/php/5.5/php.ini
+echo 'You may need to add manually extension=intl.so to your php.ini if in another path than /usr/local/etc/php/5.5/php.ini'
+
 mkdir -p ~/Library/LaunchAgents && cp /usr/local/Cellar/mysql/*/homebrew.mxcl.mysql.plist ~/Library/LaunchAgents/
 launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 unset TMPDIR && mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
