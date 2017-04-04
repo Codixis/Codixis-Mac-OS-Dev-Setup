@@ -22,7 +22,6 @@ brew cask install opera
 brew cask install sublime-text
 brew cask install filezilla
 brew cask install virtualbox
-brew cask install phpstorm
 brew cask install axure-rp
 brew cask install sequel-pro
 brew cask install mysqlworkbench
