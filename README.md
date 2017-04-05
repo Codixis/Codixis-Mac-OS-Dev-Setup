@@ -15,15 +15,21 @@ chmod 700 script.sh
 
 ```
 
-### What it will install ? 
+### Useful commands   
 ``` bash
 
-# Basic tools for web development
+## Stop
+php-fpm.stop
+sudo nginx -s stop
 
-# Lemp local install 
-
+## Start
+php-fpm.start
+sudo nginx
 
 ```
+
+
+## Old stuff, will be deleted
 
 ### Setup Github
 ``` bash
