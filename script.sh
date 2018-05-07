@@ -63,70 +63,32 @@ brew cask install spotify
 brew install mysql
 brew pin mysql
 
-brew tap homebrew/dupes
-brew tap josegonzalez/homebrew-php
-brew install --without-apache --with-fpm --with-mysql php55
+brew tap homebrew/services; brew tap homebrew/dupes
+brew install php71 --with-fpm --without-apache; php -v; php-fpm -v
+brew services start php71 
 
-brew install icu4c
-echo 'Copy your ICU path, done ? (Y)'
-read input_variable
-cd 
-echo 'You should now be at a prompt to configure PEAR :'
-echo 'Type 1 and press return.'
-echo 'Enter: /usr/local/pear'
-echo 'Type 4 and press return.'
-echo 'Enter: /usr/local/bin'
-echo 'Press return'
-curl -O  http://pear.php.net/go-pear.phar
-sudo php -d detect_unicode=0 go-pear.phar
-sudo pecl update-channels
-sudo pecl install intl
-echo 'Paste your ICU path : your /usr/local/Cellar/icu4c/55.1'
-sed -i '$ a\extension=intl.so' /usr/local/etc/php/5.5/php.ini
-echo 'You may need to add manually extension=intl.so to your php.ini if in another path than /usr/local/etc/php/5.5/php.ini'
-
-mkdir -p ~/Library/LaunchAgents && cp /usr/local/Cellar/mysql/*/homebrew.mxcl.mysql.plist ~/Library/LaunchAgents/
-launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
-unset TMPDIR && mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
-start mysql
-
+brew install nginx; brew services start nginx
+echo 'Nginx configuration is in : /usr/local/etc/nginx';
+echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.bash_profile && . ~/.bash_profile
 mkdir -p ~/Library/LaunchAgents
-cp /usr/local/Cellar/php*/*/homebrew.mxcl.php*.plist ~/Library/LaunchAgents/
-cp ~/Library/LaunchAgents/homebrew.mxcl.php*.plist ~/Library/LaunchAgents/homebrew-php.josegonzalez.php55.plist
-launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php*.plist
-lsof -Pni4 | grep LISTEN | grep php
-
-brew install nginx
-sudo cp /usr/local/opt/nginx/*.plist /Library/LaunchDaemons/
+ln -sfv /usr/local/opt/php71/homebrew.mxcl.php71.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php71.plist
+sudo cp -v /usr/local/opt/nginx/*.plist /Library/LaunchDaemons/
 sudo chown root:wheel /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
-curl -IL http://localhost:8080
-sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+
 mkdir -p /usr/local/etc/nginx/logs
 mkdir -p /usr/local/etc/nginx/sites-available
 mkdir -p /usr/local/etc/nginx/sites-enabled
 mkdir -p /usr/local/etc/nginx/conf.d
 mkdir -p /usr/local/etc/nginx/ssl
+
+cp /usr/local/Cellar/mysql/*/homebrew.mxcl.mysql.plist ~/Library/LaunchAgents/
+launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
 sudo mkdir -p /var/www
 sudo chown :staff /var/www
 sudo chmod 775 /var/www
-rm /usr/local/etc/nginx/nginx.conf
-curl -L https://gist.github.com/frdmn/7853158/raw/nginx.conf -o /usr/local/etc/nginx/nginx.conf
-curl -L https://gist.github.com/frdmn/7853158/raw/php-fpm -o /usr/local/etc/nginx/conf.d/php-fpm
-curl -L https://gist.github.com/frdmn/7853158/raw/sites-available_default -o /usr/local/etc/nginx/sites-available/default
-curl -L https://gist.github.com/frdmn/7853158/raw/sites-available_default-ssl -o /usr/local/etc/nginx/sites-available/default-ssl
-mkdir -p /usr/local/etc/nginx/ssl
-openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj '/C=US/ST=State/L=Town/O=Office/CN=localhost' -keyout /usr/local/etc/nginx/ssl/localhost.key -out /usr/local/etc/nginx/ssl/localhost.crt
-ln -sfv /usr/local/etc/nginx/sites-available/default /usr/local/etc/nginx/sites-enabled/default
-ln -sfv /usr/local/etc/nginx/sites-available/default-ssl /usr/local/etc/nginx/sites-enabled/default-ssl
-curl -L https://gist.githubusercontent.com/mgmilcher/c3a1d0138dde3eb0f429/raw/ed04e90d7770dbb62c60e1e4a912f75adc46cb5e/osx-server-aliases -o /tmp/.aliases
-cat /tmp/.aliases >> ~/.profile
-source ~/.profile
-nginx.stop
-nginx.start
-php-fpm.stop
-php-fpm.start
-
 mkdir -p ~/Documents/Development/nativeReact
 cd ~/Documents/Development
 ln -s /var/www/
